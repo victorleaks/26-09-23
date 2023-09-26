@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stopots</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #FF0000; /* Altere para a cor vermelha desejada */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease; /* Adiciona uma transição suave de 0.3 segundos para a cor de fundo */
+        }
+
+        button:hover {
+            background-color: #CC0000; /* Cor mais escura ao passar o mouse */
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            font-weight: bold;
+            font-size: 18px;
+            color: #007BFF;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        #pontuacao {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stopots</h1>
+        <button onclick="iniciarRodada()">Iniciar Rodada</button>
+
+        <h2>Categoria:</h2>
+        <p id="categoria"></p>
+
+        <h2>Letra:</h2>
+        <p id="letra"></p>
+
+        <h2>Palavra:</h2>
+        <input type="text" id="palavra" disabled>
+        
+        <h2>Pontuação:</h2>
+        <p id="pontuacao">0</p>
+    </div>
+    
+    <script>
+        const categorias = ["Frutas", "Países", "Cidades", "Animais", "Nomes"];
+        let pontuacao = 0;
+        
+        function gerarCategoria() {
+            const indiceAleatorio = Math.floor(Math.random() * categorias.length);
+            return categorias[indiceAleatorio];
+        }
+        
+        function gerarLetra() {
+            const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const indiceAleatorio = Math.floor(Math.random() * letras.length);
+            return letras.charAt(indiceAleatorio);
+        }
+
+        function calcularPontuacao(palavra, categoria) {
+            return 1;
+        }
+
+        function iniciarRodada() {
+            const categoria = gerarCategoria();
+            const letra = gerarLetra();
+            
+            document.getElementById("categoria").textContent = categoria;
+            document.getElementById("letra").textContent = letra;
+            document.getElementById("palavra").value = "";
+            document.getElementById("palavra").disabled = false;
+        }
+        
+        function encerrarRodada() {
+            const palavra = document.getElementById("palavra").value.toUpperCase();
+            const categoria = document.getElementById("categoria").textContent.toUpperCase();
+            
+            const pontuacaoRodada = calcularPontuacao(palavra, categoria);
+            pontuacao += pontuacaoRodada;
+            
+            document.getElementById("pontuacao").textContent = pontuacao;
+            document.getElementById("palavra").disabled = true;
+        }
+        
+        function verificarResposta() {
+            const palavra = document.getElementById("palavra").value.toUpperCase();
+            const categoria = document.getElementById("categoria").textContent.toUpperCase();
+            
+            if (palavra.startsWith(document.getElementById("letra").textContent) && palavra !== "") {
+                encerrarRodada();
+            }
+        }
+        
+        document.getElementById("palavra").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                verificarResposta();
+            }
+        });
+    </script>
+</body>
+</html>
